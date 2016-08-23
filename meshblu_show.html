@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>Meshblu show</title>
+    <script src="https://cdn.octoblu.com/js/meshblu/latest/meshblu.bundle.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script>
+    function getUrlVars()
+    {
+      var vars = [], max = 0, hash = "", array = "";
+      var url = window.location.search;
+
+      hash  = url.slice(1).split('&');
+      max = hash.length;
+      for (var i = 0; i < max; i++) {
+        array = hash[i].split('=');
+        vars.push(array[0]);
+        vars[array[0]] = array[1];
+      }
+      return vars;
+    }
+
+      var para = getUrlVars();
+      var uuid = para["myuuid"];
+      var token = para["mytoken"];
+      var suuid = para["suuid"];
+      var server = para["server"];
+      var port = para["port"];
+      var debug = para["debug"];
+
+      if (suuid != null && uuid != null && token != null && server != null && port != null){
+        var conn = meshblu.createConnection({
+          "uuid": uuid,
+          "token": token,
+          "server": server,
+          "port": port
+        });
+        conn.on('ready', function(data){
+          console.log('UUID AUTHENTICATED!');
+          console.log(data);
+          conn.subscribe({
+            uuid: suuid,
+            //types: ["sent", "received"],
+            //topics: ["device*", "-*status"]
+          }, function(result) {
+            console.log(result);
+
+            conn.on('message', function (message) {
+              console.log('message received', message);
+              var json = message;
+              if (json.payload != null && json.payload.command != null){
+                //$(".activity").prepend(JSON.stringify(json.payload.command) + '<br />');
+                $(".activity").html(json.payload.command);
+                console.log(json.payload.command);
+              }
+            });
+          });
+        });
+      }
+    </script>
+  </head>
+  <body>
+    <div class="activity"></div>
+  </body>
+</html>
