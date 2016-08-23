@@ -4,7 +4,7 @@
 
 Show meshblu_show.html in your blowser with the following parameters.
 
-http:///xxxx.com/meshblu_show.html?myuuid=xxx&mytoken=xxx&suuid=xxx&server=xxx&port=xxx
+http://qurihara.github.io/meshblu-show/index.html?myuuid=xxx&mytoken=xxx&suuid=xxx&server=xxx&port=xxx
 
 Type the following command in your terminal.
 
