@@ -49,11 +49,16 @@
             conn.on('message', function (message) {
               console.log('message received', message);
               var json = message;
-              if (json.payload != null && json.payload.command != null){
-                //$(".activity").prepend(JSON.stringify(json.payload.command) + '<br />');
-                $(".activity").html(json.payload.command);
-                console.log(json.payload.command);
+              if (json.payload != null){
+                var command=JSON.parse(json.payload)
+                $(".activity").html(command);
+                console.log(command);
               }
+              // if (json.payload != null && json.payload.command != null){
+              //   //$(".activity").prepend(JSON.stringify(json.payload.command) + '<br />');
+              //   $(".activity").html(json.payload.command);
+              //   console.log(json.payload.command);
+              // }
             });
           });
         });
